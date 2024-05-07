@@ -5,16 +5,10 @@
         <!-- Content Container -->
         <div class="max-w-lg sm:max-w-xl ml-12">
           <h1 class="text-3xl sm:text-3xl font-bold  mb-4 sm:mb-6">Welcome to Alzheimer's Disease Detection</h1>
-          <p class="text-base sm:text-md text-gray-700 leading-relaxed">Early detection of Alzheimer's disease is crucial for effective management and treatment. Our innovative platform uses state-of-the-art machine learning technology to assist in the early diagnosis of Alzheimer's disease through brain image analysis.</p>
+          <p class="text-md  text-gray-700 leading-relaxed">Early detection of Alzheimer's disease is crucial for effective management and treatment. Our innovative platform uses state-of-the-art machine learning technology to assist in the early diagnosis of Alzheimer's disease through brain image analysis.</p>
           
-          <h2 class="text-xl sm:text-xl font-semibold mt-4 mb-2">How it Works:</h2>
-          <ol class="list-decimal text-base sm:text-md text-gray-700 leading-relaxed ml-6">
-            <li>Upload Your Brain Image: Simply upload a brain image using our user-friendly interface.</li>
-            <li>Receive Predictions: Our advanced algorithms analyze the image to detect potential signs of Alzheimer's disease.</li>
-            <li>Get Results: Within moments, you'll receive comprehensive results indicating the likelihood of Alzheimer's disease based on the uploaded image.</li>
-          </ol>
-          
-          <button class="btn btn-primary mt-6 sm:mt-4 block w-full sm:w-auto ml-1/2 sm:mx-0 " @click="useToast.openModal=true">Start Prediction</button>
+         
+          <button class="btn btn-primary mt-8 sm:mt-6 block w-full sm:w-auto ml-1/2 sm:mx-0 " @click="useToast.openModal=true">Start Prediction</button>
         </div>
         
         <!-- Image Container -->

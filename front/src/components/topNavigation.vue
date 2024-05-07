@@ -4,7 +4,10 @@
             <span class="uppercase">Medico</span>
         </div>
 
-       
+        <div class="w-fit text-base capitalize  hidden sm:flex items-center gap-10 ">
+           <img src="@/assets/images/WITHOUT BACKGROUND.png" alt="" class="w-16 h-16 mt-2">
+        </div>
+
       
            
        
@@ -18,5 +21,4 @@
 </script>
 
 <style lang="scss" scoped></style>
-
 
