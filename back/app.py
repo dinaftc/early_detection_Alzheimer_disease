@@ -5,6 +5,7 @@ import numpy as np
 from PIL import Image
 import io
 from fastapi.middleware.cors import CORSMiddleware
+from tensorflow.keras.preprocessing import image
 # Initialize FastAPI app
 app = FastAPI(debug=True)
 
@@ -27,19 +28,9 @@ app.add_middleware(
 model = load_model('modelBiLstm.keras')
 
 # Map class indices to class names
-class_indices = {0: 'Mild_Demented', 1: 'Moderate_Demented', 2: 'Non_Demented', 3: 'Very_Mild_Demented'}
+class_indices = {0: 'Mild_Demented_augmented', 1: 'Moderate_Demented_augmented', 2: 'Non_Demented', 3: 'Very_Mild_Demented'}
 
-# Function to preprocess the image
-def preprocess_image(img):
-    # Convert image to RGB format if it has 4 channels (RGBA)
-    if img.mode == 'RGBA':
-        img = img.convert('RGB')
-    # Preprocess the image as per your model's requirements (resize, normalize, etc.)
-    # Example:
-    img = img.resize((150, 150))
-    img_array = np.array(img) / 255.0  # Normalize
-    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
-    return img_array
+
 
 
 # Define endpoint to receive image and return prediction
@@ -49,17 +40,19 @@ async def predict_alzheimar(file: UploadFile = File(...)):
         # Read image file
         contents = await file.read()
         # Convert image file to image object
-        img = Image.open(io.BytesIO(contents))
-        # Preprocess the image
-        processed_img = preprocess_image(img)
-        # Make prediction
-        prediction = model.predict(processed_img)
-        # Get predicted class index
+        
+        img = image.load_img(io.BytesIO(contents), target_size=(150, 150))  # Assuming input size of your model is (150, 150)
+        img_array = image.img_to_array(img)
+        img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+        img_array /= 255.0  # Normalize pixel values
+
+        # Predict the class probabilities
+        prediction = model.predict(img_array)
+
+        # Get the predicted class label
         predicted_class_index = np.argmax(prediction)
-        # Get predicted class name
         predicted_class_name = class_indices[predicted_class_index]
         # Send response with predicted class
         return JSONResponse( predicted_class_name)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
